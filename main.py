@@ -4,8 +4,10 @@ import logging
 import os
 import random
 import time
-
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 URL = "https://api.divar.ir/v8/web-search/{SEARCH_CONDITIONS}".format(
     **os.environ)
@@ -59,7 +61,7 @@ def send_telegram_message(house):
     body = {"chat_id": BOT_CHATID, "parse_mode": "HTML", "text": text}
     result = requests.post(url, data=body, proxies=proxy_config)
     if result.status_code == 429:
-        time.sleep(random.randint(3, 7))
+        time.sleep(random.randint(1, 3))
         send_telegram_message(house)
 
 
